@@ -1,0 +1,27 @@
+
+
+
+.alternates{
+    margin: 0 auto !important; 
+    max-width: 750px !important;
+}
+.main-body{
+    min-height: 800px;
+    margin-left: 5%;
+    margin-right: 5%; 
+}
+.in-the-middle{
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.book-inputs{
+    margin: 0 auto; 
+    max-width: 300px
+}
+
+.form-holder{
+    background-color: #f7f7f7;
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px 2px #b4b4b4;
+}

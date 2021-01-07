@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('main')
 
-        <title>Book List</title>
+@section('custom_css')
+    
+@stop
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
+@section('content')
+    <div class="col-md-12 text-center mt-5 p-3 form-holder">
+        <form action="/action_page.php">
+            <div class="form-group text-left book-inputs">
+                <label for="email">Book Title</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="form-group text-left book-inputs">
+                <label for="pwd">Author</label>
+                <input type="password" class="form-control" id="pwd">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+@stop
 
-       
-    </head>
-    <body>
-       <div>
-            <span>Hello</span>
-       </div>
-    </body>
-</html>
+@section('custom_js')
+@stop
