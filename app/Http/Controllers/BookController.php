@@ -16,4 +16,8 @@ class BookController extends Controller
         ];
         return view('booklist', $data);
     }
+
+    public function addBookList(Request $request){
+        dd($request);
+    }
 }

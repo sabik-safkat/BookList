@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'BookController@bookList')->name('home');
+Route::post('/add-book', 'BookController@addBookList')->name('new-book-creation');

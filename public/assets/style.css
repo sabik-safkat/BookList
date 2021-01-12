@@ -25,3 +25,9 @@
     border-radius: 4px;
     box-shadow: 2px 2px 2px 2px #b4b4b4;
 }
+
+.validation_alert{
+    font-size: 11px;
+    color: red;
+    display: none
+}
