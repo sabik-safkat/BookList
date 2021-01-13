@@ -21,6 +21,31 @@
         </form>
         <button type="button" id="add_book" class="btn btn-default">Submit</button>
     </div>
+    <div class="col-md-12 text-center mt-5 p-3 form-holder">
+        @if(isset($books))
+            <table style="width: 100%">
+                <thead>
+                    <th>Serial</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    @foreach($books as $book)
+                        <tr>
+                            <td>1</td>
+                            <td>{{$book->title}}</td>
+                            <td>{{$book->author}}</td>
+                            <td>
+                                <span class="pointy" onclick="deleteBook('{{$book->id}}')"><i class="fa fa-trash"></i></span>&nbsp;
+                                <span class="pointy" onclick="editBook('{{$book->id}}')"><i class="fa fa-edit"></i></span>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </div>
 @stop
 
 @section('custom_js')
@@ -46,6 +71,14 @@
         if($('#'+field).val() != ''){
             $('#'+message).hide();
         }
+    }
+
+    function deleteBook(id){
+        alert(id);
+    }
+
+    function editBook(id){
+        alert(id);
     }
 </script>
 @stop

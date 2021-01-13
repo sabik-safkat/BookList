@@ -18,6 +18,10 @@ class BookController extends Controller
     }
 
     public function addBookList(Request $request){
-        dd($request);
+        $book = new Book;
+        $book->title = $request->book_title;
+        $book->author = $request->author;
+        $book->save();
+        return redirect()->back();
     }
 }

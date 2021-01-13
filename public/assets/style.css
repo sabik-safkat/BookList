@@ -31,3 +31,11 @@
     color: red;
     display: none
 }
+
+td, th{
+    text-align: left
+}
+
+.pointy{
+    cursor: pointer
+}
