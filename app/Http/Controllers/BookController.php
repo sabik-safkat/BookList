@@ -18,10 +18,22 @@ class BookController extends Controller
     }
 
     public function addBookList(Request $request){
-        $book = new Book;
-        $book->title = $request->book_title;
-        $book->author = $request->author;
-        $book->save();
+        if ($request->book_id > 0){
+            $book = Book::where('id', $request->book_id)->first();
+            $book->title = $request->book_title;
+            $book->author = $request->author;
+            $book->save(); 
+        } else {
+            $book = new Book;
+            $book->title = $request->book_title;
+            $book->author = $request->author;
+            $book->save(); 
+        }
+        return redirect()->back();
+    }
+
+    public function deleteBook(Request $request){
+        Book::where('id', $request->id)->delete();
         return redirect()->back();
     }
 }

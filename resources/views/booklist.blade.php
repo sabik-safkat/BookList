@@ -12,6 +12,7 @@
                 <label for="book_title">Book Title</label>
                 <input type="text" class="form-control" id="book_title" name="book_title" onchange="removeAlert('book_title','title_validation')">
                 <span id="title_validation" class="validation_alert">{{ config('constants.book_name_validation') }}</span>
+                <input type="hidden" value="" name="book_id" id="book_id">
             </div>
             <div class="form-group text-left book-inputs">
                 <label for="author">Author</label>
@@ -38,7 +39,7 @@
                             <td>{{$book->author}}</td>
                             <td>
                                 <span class="pointy" onclick="deleteBook('{{$book->id}}')"><i class="fa fa-trash"></i></span>&nbsp;
-                                <span class="pointy" onclick="editBook('{{$book->id}}')"><i class="fa fa-edit"></i></span>
+                                <span class="pointy" onclick="editBook({{$book->id}}, '{{$book->title}}', '{{$book->author}}')"><i class="fa fa-edit"></i></span>
                             </td>
                         </tr>
                     @endforeach
@@ -74,11 +75,25 @@
     }
 
     function deleteBook(id){
-        alert(id);
+        $.ajax({
+            url: "{{route('book-deletion')}}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "id" : id
+            },
+            type: 'POST',
+            success: function(result){
+                location.reload();
+            }
+        });
     }
 
-    function editBook(id){
-        alert(id);
+    function editBook(id, title, author){
+        if (id > 0 && title != '' && author != ''){
+            $('#book_title').val(title);
+            $('#author').val(author);
+            $('#book_id').val(id);
+        }
     }
 </script>
 @stop
