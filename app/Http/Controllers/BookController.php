@@ -9,8 +9,14 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function bookList(){
-        $books = Book::all();
+    public function bookList(Request $request){
+        if(isset($request->search_term)){
+            $books = Book::where('title', 'LIKE', '%'.$request->search_term.'%')
+                            ->orWhere('author', 'LIKE', '%'.$request->search_term.'%')
+                            ->get();
+        } else {
+            $books = Book::all();
+        }
         $data = [
             'books' => $books
         ];

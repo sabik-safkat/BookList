@@ -23,6 +23,19 @@
         <button type="button" id="add_book" class="btn btn-default">Submit</button>
     </div>
     <div class="col-md-12 text-center mt-5 p-3 form-holder">
+            <form id="search_book" action="{{route('home')}}" method="GET">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" id="search_term" name="search_term" value="">
+                                <button type="submit" class="search_button"><i class="fa fa-search"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+            <br/>
         @if(isset($books))
             <table style="width: 100%">
                 <thead>
