@@ -24,12 +24,17 @@
     </div>
     <div class="col-md-12 text-center mt-5 p-3 form-holder">
             <form id="search_book" action="{{route('home')}}" method="GET">
-                <table>
+                <table style="width: 100%">
                     <tbody>
                         <tr>
                             <td>
-                                <input type="text" id="search_term" name="search_term" value="">
+                                <input type="text" id="search_term" name="search_term" value="{{$search_term}}">
+                                <input type="hidden" id="search_column" name="search_column" value="">
                                 <button type="submit" class="search_button"><i class="fa fa-search"></i></button>
+                                <a href="{{route('home')}}" style="color: gray; text-decoration: none">Reset</a>
+                            </td>
+                            <td class="text-right">
+                                <a href="{{route('export')}}">Export CSV</a>
                             </td>
                         </tr>
                     </tbody>
@@ -40,8 +45,16 @@
             <table style="width: 100%">
                 <thead>
                     <th>Serial</th>
-                    <th>Title</th>
-                    <th>Author</th>
+                    <th>
+                        Title 
+                        <i data-toggle="tooltip" title="{{ config('constants.click_to_sort_by_title') }}" class="fa fa-sort pointy" onclick="sort('title')"></i>
+                        <a href="{{route('export', ['column' => 'title'])}}"><i class="fa fa-file-csv pointy"></i></a>
+                    </th>
+                    <th>
+                        Author 
+                        <i data-toggle="tooltip" title="{{ config('constants.click_to_sort_by_author') }}" class="fa fa-sort pointy" onclick="sort('author')"></i>
+                        <a href="{{route('export', ['column' => 'author'])}}"><i class="fa fa-file-csv pointy"></i></a>
+                    </th>
                     <th>Action</th>
                 </thead>
                 <tbody>
@@ -107,6 +120,15 @@
             $('#author').val(author);
             $('#book_id').val(id);
         }
+    }
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+
+    function sort(column){
+        $('#search_column').val(column);
+        $('#search_book').submit();
     }
 </script>
 @stop
