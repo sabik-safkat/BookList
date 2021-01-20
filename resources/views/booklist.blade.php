@@ -19,7 +19,7 @@
                 <span id="author_validation" class="validation_alert">{{ config('constants.author_name_validation') }}</span>
             </div>
         </form>
-        <button type="button" id="add_book" class="export-buttons">Submit</button>
+        <button type="button" id="add_book" class="export-buttons" onclick="send()">Submit</button>
         <button type="button" id="add_book" class="export-buttons" onclick="reset_search()">Reset</button>
     </div>
     <div class="col-md-12 text-center mt-5 p-3 form-holder">

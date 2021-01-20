@@ -59,7 +59,6 @@ class BookController extends Controller
     public function addBookList(Request $request){
         if ($request->book_id > 0){
             $book = Book::where('id', $request->book_id)->first();
-            $book->title = $request->book_title;
             $book->author = $request->author;
             $book->save(); 
         } else {
