@@ -10,6 +10,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 use Illuminate\Http\Request;
 
+use File;
+use Response;
+
 class BookController extends Controller
 {
     public function bookList(Request $request){
@@ -25,7 +28,7 @@ class BookController extends Controller
         });
         
         $data = [
-            'books' => $books->get(),
+            'books' => $books->paginate(2),
             'search_term' => $term
         ];
         return view('booklist', $data);
@@ -98,9 +101,9 @@ class BookController extends Controller
         $xml->endElement();
         $xml->endDocument();
         $contents = $xml->outputMemory();
-        \File::put(public_path('/'.'output.xml'),$contents);
-
-	    return \Response::download(public_path('/'.'output.xml'));
+        $name = 'output_'.time().'.xml';
+        File::put(public_path('assets/xml_exports/'.$name),$contents);
+        return Response::download(public_path('assets/xml_exports/'.$name));
     
     }
 }

@@ -20,7 +20,8 @@
                 <span id="author_validation" class="validation_alert">{{ config('constants.author_name_validation') }}</span>
             </div>
         </form>
-        <button type="button" id="add_book" class="btn btn-default">Submit</button>
+        <button type="button" id="add_book" class="export-buttons">Submit</button>
+        <button type="button" id="add_book" class="export-buttons" onclick="reset_search()">Reset</button>
     </div>
     <div class="col-md-12 text-center mt-5 p-3 form-holder">
             <form id="search_book" action="{{route('home')}}" method="GET">
@@ -31,10 +32,11 @@
                                 <input type="text" id="search_term" name="search_term" value="{{$search_term}}">
                                 <input type="hidden" id="search_column" name="search_column" value="">
                                 <button type="submit" class="search_button"><i class="fa fa-search"></i></button>
-                                <a href="{{route('home')}}" style="color: gray; text-decoration: none">Reset</a>
+                                <a href="{{route('home')}}" class="export-buttons">Reset</a>
                             </td>
                             <td class="text-right">
-                                <a href="{{route('export')}}">Export CSV</a>
+                                <a href="{{route('export')}}" class="export-buttons">Export CSV</a>
+                                <a href="{{route('export-xml')}}" class="export-buttons">Export XML</a>
                             </td>
                         </tr>
                     </tbody>
@@ -60,15 +62,20 @@
                 <tbody>
                     @foreach($books as $book)
                         <tr>
-                            <td>1</td>
+                            <td class="text-center">{{ $loop->index + 1 }}</td>
                             <td>{{$book->title}}</td>
                             <td>{{$book->author}}</td>
-                            <td>
+                            <td class="text-center">
                                 <span class="pointy" onclick="deleteBook('{{$book->id}}')"><i class="fa fa-trash"></i></span>&nbsp;
                                 <span class="pointy" onclick="editBook({{$book->id}}, '{{$book->title}}', '{{$book->author}}')"><i class="fa fa-edit"></i></span>
                             </td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <td colspan="4" class="text-center pt-5">
+                            {{ $books->links() }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         @endif
@@ -129,6 +136,12 @@
     function sort(column){
         $('#search_column').val(column);
         $('#search_book').submit();
+    }
+
+    function reset_search(){
+        $('#book_title').val('');
+        $('#book_id').val('');
+        $('#author').val('');
     }
 </script>
 @stop
