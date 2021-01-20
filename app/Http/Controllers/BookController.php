@@ -13,8 +13,21 @@ use Illuminate\Http\Request;
 use File;
 use Response;
 
+
+/**
+ * Booklist CRUD and exports into XML and CSV
+ *
+ * @author Sabik Safkat
+ */ 
 class BookController extends Controller
 {
+    /**
+     * Get the paginated booklist as whole or filtered by
+     * title or author or some other search term 
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|null
+     */
     public function bookList(Request $request){
         $books = Book::query();
         $term = isset($request->search_term)?$request->search_term:'';
@@ -28,12 +41,21 @@ class BookController extends Controller
         });
         
         $data = [
-            'books' => $books->paginate(2),
+            'books' => $books->paginate(10),
             'search_term' => $term
         ];
         return view('booklist', $data);
     }
 
+
+
+
+    /**
+     * Add a new book or edit existing one
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return route
+    */
     public function addBookList(Request $request){
         if ($request->book_id > 0){
             $book = Book::where('id', $request->book_id)->first();
@@ -49,11 +71,28 @@ class BookController extends Controller
         return redirect()->back();
     }
 
+
+
+
+    /**
+     * Delete existing book
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return route
+    */
     public function deleteBook(Request $request){
         Book::where('id', $request->id)->delete();
         return redirect()->back();
     }
 
+
+
+    /**
+     * Export CSV of book title list, author list or the whole booklist 
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return csv
+    */
     public function export(Request $request){
         $column = isset($request->column)?$request->column:'';
         $books = Book::query();
@@ -75,6 +114,14 @@ class BookController extends Controller
         ]);
     }
 
+
+    
+    /** Export XML of book title list, author list or the whole booklist 
+     * 
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return xml
+    */
     public function xml(Request $request){
         $column = isset($request->column)?$request->column:'';
         $books = Book::query();
@@ -93,8 +140,12 @@ class BookController extends Controller
 
         foreach ($results as $result) {
             $xml->startElement('Book');
-            $xml->writeAttribute('title', $result->title);
-            $xml->writeAttribute('author', $result->author);
+            if(!isset($request->column) || $request->column == 'title'){
+                $xml->writeAttribute('title', $result->title);
+            }
+            if(!isset($request->column) || $request->column == 'author'){
+                $xml->writeAttribute('author', $result->author);
+            }
             $xml->endElement();
         }
 
@@ -104,6 +155,5 @@ class BookController extends Controller
         $name = 'output_'.time().'.xml';
         File::put(public_path('assets/xml_exports/'.$name),$contents);
         return Response::download(public_path('assets/xml_exports/'.$name));
-    
     }
 }

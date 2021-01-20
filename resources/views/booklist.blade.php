@@ -1,7 +1,6 @@
 @extends('main')
 
 @section('custom_css')
-    
 @stop
 
 @section('content')
@@ -50,12 +49,22 @@
                     <th>
                         Title 
                         <i data-toggle="tooltip" title="{{ config('constants.click_to_sort_by_title') }}" class="fa fa-sort pointy" onclick="sort('title')"></i>
-                        <a href="{{route('export', ['column' => 'title'])}}"><i class="fa fa-file-csv pointy"></i></a>
+                        <a href="{{route('export', ['column' => 'title'])}}">
+                            <i data-toggle="tooltip" title="{{ config('constants.export_csv') }}" class="fa fa-file-csv pointy"></i>
+                        </a>
+                        <a href="{{route('export-xml', ['column' => 'title'])}}">
+                            <i data-toggle="tooltip" title="{{ config('constants.export_xml') }}" class="fa fa-file pointy"></i>
+                        </a>
                     </th>
                     <th>
                         Author 
                         <i data-toggle="tooltip" title="{{ config('constants.click_to_sort_by_author') }}" class="fa fa-sort pointy" onclick="sort('author')"></i>
-                        <a href="{{route('export', ['column' => 'author'])}}"><i class="fa fa-file-csv pointy"></i></a>
+                        <a href="{{route('export', ['column' => 'author'])}}">
+                            <i data-toggle="tooltip" title="{{ config('constants.export_csv') }}" class="fa fa-file-csv pointy"></i>
+                        </a>
+                        <a href="{{route('export-xml', ['column' => 'author'])}}">
+                            <i data-toggle="tooltip" title="{{ config('constants.export_xml') }}" class="fa fa-file pointy"></i>
+                        </a>
                     </th>
                     <th>Action</th>
                 </thead>
@@ -66,8 +75,12 @@
                             <td>{{$book->title}}</td>
                             <td>{{$book->author}}</td>
                             <td class="text-center">
-                                <span class="pointy" onclick="deleteBook('{{$book->id}}')"><i class="fa fa-trash"></i></span>&nbsp;
-                                <span class="pointy" onclick="editBook({{$book->id}}, '{{$book->title}}', '{{$book->author}}')"><i class="fa fa-edit"></i></span>
+                                <span class="pointy" onclick="deleteBook('{{$book->id}}')">
+                                    <i data-toggle="tooltip" title="{{ config('constants.delete_book') }}" class="fa fa-trash"></i>
+                                </span>&nbsp;
+                                <span class="pointy" onclick="editBook({{$book->id}}, '{{$book->title}}', '{{$book->author}}')">
+                                    <i data-toggle="tooltip" title="{{ config('constants.edit_book') }}" class="fa fa-edit"></i>
+                                </span>
                             </td>
                         </tr>
                     @endforeach
@@ -83,65 +96,4 @@
 @stop
 
 @section('custom_js')
-<script>
-    $('#add_book').click(function(){
-        var title = $('#book_title').val();
-        var author = $('#author').val();
-        flag = 0;
-        if(title == '' || title == null){
-            $('#title_validation').show();
-            flag = 1;
-        }
-        if(author == '' || author == null){
-            $('#author_validation').show();
-            flag = 1;
-        }
-        if (flag == 0){
-            $('#create_book').submit();
-        }
-    })
-
-    function removeAlert(field, message){
-        if($('#'+field).val() != ''){
-            $('#'+message).hide();
-        }
-    }
-
-    function deleteBook(id){
-        $.ajax({
-            url: "{{route('book-deletion')}}",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "id" : id
-            },
-            type: 'POST',
-            success: function(result){
-                location.reload();
-            }
-        });
-    }
-
-    function editBook(id, title, author){
-        if (id > 0 && title != '' && author != ''){
-            $('#book_title').val(title);
-            $('#author').val(author);
-            $('#book_id').val(id);
-        }
-    }
-
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
-    });
-
-    function sort(column){
-        $('#search_column').val(column);
-        $('#search_book').submit();
-    }
-
-    function reset_search(){
-        $('#book_title').val('');
-        $('#book_id').val('');
-        $('#author').val('');
-    }
-</script>
 @stop
