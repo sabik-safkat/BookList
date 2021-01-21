@@ -28,6 +28,10 @@ function editBook(id, title, author){
         $('#book_id').val(id);
         $("#book_title").prop("readonly", true);
         $("html, body").animate({ scrollTop: 0 }, "slow");
+
+        //remove validation alerts if any
+        $('#title_validation').hide();
+        $('#author_validation').hide();
     }
 }
 
