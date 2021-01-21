@@ -41,7 +41,7 @@ class BookController extends Controller
         });
         
         $data = [
-            'books' => $books->paginate(10),
+            'books' => $books->orderBy('id', 'DESC')->paginate(10),
             'search_term' => $term
         ];
         return view('booklist', $data);
@@ -62,10 +62,12 @@ class BookController extends Controller
             $book->author = $request->author;
             $book->save(); 
         } else {
-            $book = new Book;
-            $book->title = $request->book_title;
-            $book->author = $request->author;
-            $book->save(); 
+            if($request->title != null && $request->author != null){
+                $book = new Book;
+                $book->title = $request->book_title;
+                $book->author = $request->author;
+                $book->save();
+            } 
         }
         return redirect()->back();
     }

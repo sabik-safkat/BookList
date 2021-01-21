@@ -22,9 +22,11 @@ apache and MySql
 2. A clone of this project from the following link:
 
     https://github.com/sabik-safkat/BookList.git
-3. Install composer
+3. Install composer in the running machine
 4. In the root of the projects directory, run "composer install"
-5. After successful installation of the PHP packages in vendor, run "php artisan serve". This will start the application in localhosts default port 8000.
+5. Migrate database by the command "php artisan migrate"
+6. edit .env file in projects root directory for database credentials.
+7. After successful installation of the PHP packages in vendor, run "php artisan serve". This will start the application in localhosts default port 8000.
 
 ## How to check out
 The application can be viewd from the following url:

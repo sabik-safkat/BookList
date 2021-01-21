@@ -21,22 +21,6 @@ function removeAlert(field, message){
     }
 }
 
-function deleteBook(id){
-    if(confirm("Are you sure you want to delete this entry?")){
-        $.ajax({
-            url: "/delete-book",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "id" : id
-            },
-            type: 'GET',
-            success: function(result){
-                location.reload();
-            }
-        });
-    }
-}
-
 function editBook(id, title, author){
     if (id > 0 && title != '' && author != ''){
         $('#book_title').val(title);

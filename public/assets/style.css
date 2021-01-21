@@ -55,3 +55,7 @@ td, th{
     text-decoration: none !important;
     min-width: 100px !important
 }
+
+.tabular-data-sp{
+    overflow-y: auto;
+}
